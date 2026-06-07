@@ -1,0 +1,1 @@
+web: gunicorn QueueEase_API:app
