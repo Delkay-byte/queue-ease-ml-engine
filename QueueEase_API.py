@@ -273,4 +273,7 @@ def get_live_queue():
         }), 500
         
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    # Render assigns the port dynamically. We use that or default to 5000 for local testing.
+    port = int(os.environ.get("PORT", 5000))
+    # We turn debug=False for production (it's insecure and slow in the cloud)
+    app.run(host="0.0.0.0", port=port, debug=False)
