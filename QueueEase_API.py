@@ -273,7 +273,13 @@ def get_live_queue():
         }), 500
         
 if __name__ == "__main__":
-    # Render assigns the port dynamically. We use that or default to 5000 for local testing.
     port = int(os.environ.get("PORT", 5000))
-    # We turn debug=False for production (it's insecure and slow in the cloud)
+    
+    # NEW: We try to connect, but if it fails, we warn the console instead of killing the app.
+    try:
+        initialize_live_tracking_table()
+        print("--- Database Initialized ---")
+    except Exception as e:
+        print(f"--- Database connection skipped (Working in Offline Mode): {e} ---")
+    
     app.run(host="0.0.0.0", port=port, debug=False)
